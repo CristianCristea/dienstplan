@@ -19,16 +19,19 @@ class AddEmployee extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      workingHours: 0
+      workingHours: 0,
+      id: ''
     };
   }
 
   handleFormInput(e) {
     const name = e.target.name;
     const value = e.target.value;
+    const id = Date.now();
 
     this.setState({
-      [name]: value
+      [name]: value,
+      id: id
     });
   }
 

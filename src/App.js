@@ -13,7 +13,14 @@ class App extends Component {
       currentMonth: '',
       currentYear: '',
       daysInMonth: 0,
-      employees: []
+      employees: [
+        {
+          firstName: 'Cristian',
+          lastName: 'Cristea',
+          workingHours: 176,
+          id: '1509741933278'
+        }
+      ]
     };
 
     this.closeModal = this.closeModal.bind(this);

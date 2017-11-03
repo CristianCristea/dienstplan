@@ -1,1 +1,18 @@
+table {
+  th,
+  td {
+    text-align: center;
 
+    &:nth-of-type(2) {
+      text-align: left;
+    }
+  }
+
+  td {
+    cursor: pointer;
+  }
+}
+
+.active-day {
+  background-color: tomato;
+}

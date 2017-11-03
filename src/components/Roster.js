@@ -16,6 +16,14 @@ class Roster extends React.Component {
     return row;
   }
 
+  selectDay(e) {
+    const tdElements = document.getElementsByTagName('td');
+    for (let td of tdElements) {
+      td.classList.remove('active-day');
+    }
+    e.target.classList.add('active-day');
+  }
+
   render() {
     const { employees } = this.props;
 
@@ -25,16 +33,18 @@ class Roster extends React.Component {
           <tr>
             <th>#</th>
             <th>Name</th>
-            {this.fillTableRow(30).map(row => <th>{row}</th>)}
+            {this.fillTableRow(30).map(row => <th key={row}>{row}</th>)}
           </tr>
         </thead>
         <tbody>
           {employees.map(employee => {
             return (
               <TableRow
+                key={employee.id}
                 employee={employee}
                 employeeNumber={employees.indexOf(employee)}
                 fillEmployeeRow={this.fillTableRow}
+                selectDay={this.selectDay}
               />
             );
           })}
