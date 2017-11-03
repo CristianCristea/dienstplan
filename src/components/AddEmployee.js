@@ -10,6 +10,8 @@ import {
   Col
 } from 'react-bootstrap';
 
+// TODO: reset form after submit
+
 class AddEmployee extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class AddEmployee extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      hours: 0
+      workingHours: 0
     };
   }
 
@@ -71,7 +73,7 @@ class AddEmployee extends Component {
               </Col>
             </FormGroup>
 
-            <FormGroup controlId="workHours">
+            <FormGroup controlId="workingHours">
               <Col componentClass={ControlLabel} sm={2}>
                 Arbeitszeit
               </Col>
@@ -79,8 +81,8 @@ class AddEmployee extends Component {
                 <FormControl
                   type="number"
                   placeholder="Arbeitszeit - Stunden"
-                  name="hours"
-                  value={this.state.hours}
+                  name="workingHours"
+                  value={this.state.workingHours}
                   onChange={e => this.handleFormInput(e)}
                 />
               </Col>
