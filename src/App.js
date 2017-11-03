@@ -74,7 +74,10 @@ class App extends Component {
           openModal={() => this.openModal()}
           registerEmployee={this.registerEmployee}
         />
-        <Roster />
+        <Roster
+          employees={this.state.employees}
+          daysInMonth={this.state.daysInMonth}
+        />
       </div>
     );
   }
