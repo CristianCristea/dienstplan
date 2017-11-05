@@ -3,25 +3,13 @@ import { Table } from 'react-bootstrap';
 import TableRow from './TableRow';
 
 class Roster extends React.Component {
-  fillTableRow(days, workDay) {
+  generateMonthDays(days) {
     const row = [];
     for (let i = 1; i <= days; i++) {
-      if (!workDay) {
-        row.push(i);
-      } else {
-        row.push(workDay);
-      }
+      row.push(i);
     }
 
     return row;
-  }
-
-  selectDay(e) {
-    const tdElements = document.getElementsByTagName('td');
-    for (let td of tdElements) {
-      td.classList.remove('active-day');
-    }
-    e.target.classList.add('active-day');
   }
 
   render() {
@@ -33,7 +21,7 @@ class Roster extends React.Component {
           <tr>
             <th>#</th>
             <th>Name</th>
-            {this.fillTableRow(30).map(row => <th key={row}>{row}</th>)}
+            {this.generateMonthDays(30).map(row => <th key={row}>{row}</th>)}
           </tr>
         </thead>
         <tbody>
@@ -43,8 +31,7 @@ class Roster extends React.Component {
                 key={employee.id}
                 employee={employee}
                 employeeNumber={employees.indexOf(employee)}
-                fillEmployeeRow={this.fillTableRow}
-                selectDay={this.selectDay}
+                selectDay={this.props.selectDay}
               />
             );
           })}

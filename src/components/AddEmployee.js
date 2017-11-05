@@ -24,15 +24,40 @@ class AddEmployee extends Component {
     };
   }
 
+  generateId() {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    return (
+      '_' +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    );
+  }
+
   handleFormInput(e) {
     const name = e.target.name;
     const value = e.target.value;
-    const id = Date.now();
+    const id = this.generateId();
+    const generateEmployeeWorkDays = this.generateEmployeeWorkDays(
+      this.props.daysInMonth
+    );
 
     this.setState({
       [name]: value,
-      id: id
+      id: id,
+      currentDaysInMonth: generateEmployeeWorkDays
     });
+  }
+
+  generateEmployeeWorkDays(days, workDay = 'X') {
+    const row = [];
+    for (let i = 1; i <= days; i++) {
+      row.push(workDay);
+    }
+
+    return row;
   }
 
   render() {
@@ -115,6 +140,8 @@ AddEmployee.propTypes = {
   showModal: PropTypes.bool,
   openModal: PropTypes.func,
   closeModal: PropTypes.func,
+  daysInMonth: PropTypes.number,
+  currentMonth: PropTypes.string,
   registerEmployee: PropTypes.func
 };
 

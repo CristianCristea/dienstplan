@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, NavItem, Nav } from 'react-bootstrap';
 
-const NavigationMenu = ({ openModal }) => {
+const NavigationMenu = ({ openModal, changeDay }) => {
   return (
     <Navbar>
       <Navbar.Header>
@@ -14,10 +14,10 @@ const NavigationMenu = ({ openModal }) => {
         <NavItem eventKey={2} href="#">
           Mitarbeiter entfernen
         </NavItem>
-        <NavItem eventKey={4} href="#">
+        <NavItem eventKey={4} href="#" onClick={e => changeDay(e, 'D')}>
           D
         </NavItem>
-        <NavItem eventKey={5} href="#">
+        <NavItem eventKey={5} href="#" onClick={e => changeDay(e, 'X')}>
           X
         </NavItem>
       </Nav>
