@@ -53,13 +53,15 @@ class App extends Component {
             'X'
           ]
         }
-      ]
+      ],
+      employeesArchive: []
     };
 
     this.closeModal = this.closeModal.bind(this);
     this.registerEmployee = this.registerEmployee.bind(this);
     this.selectDay = this.selectDay.bind(this);
     this.changeDay = this.changeDay.bind(this);
+    this.archiveEmployee = this.archiveEmployee.bind(this);
   }
 
   closeModal() {
@@ -152,7 +154,18 @@ class App extends Component {
     this.closeModal();
   }
 
-  removeEmployee(employeeId) {}
+  archiveEmployee() {
+    const { employees, activeEmployee, employeesArchive } = this.state;
+    const employeeIndex = this.selectEmployee(employees, activeEmployee);
+    const employee = employees.splice(employeeIndex, 1)[0];
+
+    employeesArchive.push(employee);
+
+    this.setState({
+      employees: employees,
+      employeesArchive: employeesArchive
+    });
+  }
 
   componentDidMount() {
     const currentMonth = this.getCurrentMonth();
@@ -173,6 +186,7 @@ class App extends Component {
         <NavigationMenu
           openModal={() => this.openModal()}
           changeDay={this.changeDay}
+          archiveEmployee={this.archiveEmployee}
         />
         {/* <SucessMessage name="Mitarbeiter hinzugefügt" />  */}
         <AddEmployee
