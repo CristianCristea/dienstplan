@@ -19,8 +19,16 @@ class AddEmployee extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      workingHours: 0,
-      id: ''
+      id: '',
+      hours: {
+        should: null,
+        worked: null,
+        overtime: null,
+        defaultDay: 23,
+        defaultMonth: 176,
+        percentFromDefaultMonth: 100
+      },
+      currentDaysInMonth: []
     };
   }
 
@@ -51,6 +59,12 @@ class AddEmployee extends Component {
     });
   }
 
+  handleFormInputHours(e) {
+    const employeeHours = this.state.hours;
+    employeeHours['percentFromDefaultMonth'] = e.target.value;
+    this.setState({ hours: employeeHours });
+  }
+
   generateEmployeeWorkDays(days, workDay = 'X') {
     const row = [];
     for (let i = 1; i <= days; i++) {
@@ -58,6 +72,23 @@ class AddEmployee extends Component {
     }
 
     return row;
+  }
+
+  resetForm(e) {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      id: '',
+      hours: {
+        should: null,
+        worked: null,
+        overtime: null,
+        defaultDay: 23,
+        defaultMonth: 176,
+        percentFromDefaultMonth: 100
+      },
+      currentDaysInMonth: []
+    });
   }
 
   render() {
@@ -109,9 +140,9 @@ class AddEmployee extends Component {
                 <FormControl
                   type="number"
                   placeholder="Arbeitszeit - Stunden"
-                  name="workingHours"
-                  value={this.state.workingHours}
-                  onChange={e => this.handleFormInput(e)}
+                  name="percentFromDefaultMonth"
+                  value={this.state.hours.percentFromDefaultMonth}
+                  onChange={e => this.handleFormInputHours(e)}
                 />
               </Col>
             </FormGroup>
@@ -120,7 +151,10 @@ class AddEmployee extends Component {
               <Col smOffset={2} sm={10}>
                 <Button
                   type="submit"
-                  onClick={e => registerEmployee(e, person)}
+                  onClick={e => {
+                    registerEmployee(e, person);
+                    this.resetForm();
+                  }}
                 >
                   Hinfügen
                 </Button>

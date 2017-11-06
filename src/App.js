@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Button } from 'react-bootstrap';
 import NavigationMenu from './components/NavigationMenu';
 import AddEmployee from './components/AddEmployee';
 import Roster from './components/Roster';
@@ -18,8 +17,15 @@ class App extends Component {
         {
           firstName: 'Cristian',
           lastName: 'Cristea',
-          workingHours: 176,
           id: '_dii6bxxe3',
+          hours: {
+            should: 130.5,
+            worked: null,
+            overtime: null,
+            defaultDay: 23,
+            defaultMonth: 174,
+            percentFromDefaultMonth: 75
+          },
           currentDaysInMonth: [
             'X',
             'X',
@@ -146,9 +152,17 @@ class App extends Component {
     });
   }
 
+  setWorkinkHoursMonth(percent, defaultMonth = 174) {
+    return percent / 100 * defaultMonth;
+  }
+
   registerEmployee(e, person) {
     e.preventDefault();
     const { employees } = this.state;
+    person.hours.should = this.setWorkinkHoursMonth(
+      person.hours.percentFromDefaultMonth
+    );
+
     employees.push(person);
     this.setState({ employees: employees });
     this.closeModal();
