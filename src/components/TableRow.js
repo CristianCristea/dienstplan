@@ -20,6 +20,9 @@ const TableRow = ({ employee, selectDay, employeeNumber }) => {
           </td>
         );
       })}
+      <td>{employee.hours.should}</td>
+      <td>{employee.hours.worked}</td>
+      <td>{employee.hours.status}</td>
     </tr>
   );
 };

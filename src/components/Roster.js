@@ -22,6 +22,9 @@ class Roster extends React.Component {
             <th>#</th>
             <th>Name</th>
             {this.generateMonthDays(30).map(row => <th key={row}>{row}</th>)}
+            <th>Soll</th>
+            <th>Ist</th>
+            <th>Std</th>
           </tr>
         </thead>
         <tbody>

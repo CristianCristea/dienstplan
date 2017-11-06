@@ -81,7 +81,7 @@ class AddEmployee extends Component {
       id: '',
       hours: {
         should: null,
-        worked: null,
+        worked: 0,
         overtime: null,
         defaultDay: 23,
         defaultMonth: 176,
@@ -156,7 +156,7 @@ class AddEmployee extends Component {
                     this.resetForm();
                   }}
                 >
-                  Hinfügen
+                  Add
                 </Button>
               </Col>
             </FormGroup>

@@ -20,8 +20,8 @@ class App extends Component {
           id: '_dii6bxxe3',
           hours: {
             should: 130.5,
-            worked: null,
-            overtime: null,
+            worked: 0,
+            status: 0,
             defaultDay: 23,
             defaultMonth: 174,
             percentFromDefaultMonth: 75
@@ -68,6 +68,7 @@ class App extends Component {
     this.selectDay = this.selectDay.bind(this);
     this.changeDay = this.changeDay.bind(this);
     this.archiveEmployee = this.archiveEmployee.bind(this);
+    this.updateWorkingHours = this.updateWorkingHours.bind(this);
   }
 
   closeModal() {
@@ -156,6 +157,33 @@ class App extends Component {
     return percent / 100 * defaultMonth;
   }
 
+  updateWorkingHours() {
+    // get employee
+    // loop through days, filter D-days return the length
+    // subtract from should hours
+    // add to worked
+    // if worked > should add to overtime
+
+    const { employees, activeEmployee } = this.state;
+
+    const employeeIndex = this.selectEmployee(employees, activeEmployee);
+    const employee = employees.splice(employeeIndex, 1)[0];
+    const workedDays = employee.currentDaysInMonth.filter(day => day === 'D')
+      .length;
+    let workedHours = employee.hours.defaultDay * workedDays;
+    let status =
+      workedHours > employee.hours.should
+        ? workedHours - employee.hours.should
+        : -(employee.hours.should - workedHours);
+
+    employee.hours.worked = workedHours;
+    employee.hours.status = status;
+    employees.splice(employeeIndex, 0, employee);
+
+    this.setState({ employees: employees });
+    console.log(status);
+  }
+
   registerEmployee(e, person) {
     e.preventDefault();
     const { employees } = this.state;
@@ -201,6 +229,7 @@ class App extends Component {
           openModal={() => this.openModal()}
           changeDay={this.changeDay}
           archiveEmployee={this.archiveEmployee}
+          updateWorkingHours={this.updateWorkingHours}
         />
         {/* <SucessMessage name="Mitarbeiter hinzugefügt" />  */}
         <AddEmployee
