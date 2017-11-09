@@ -135,30 +135,32 @@ class App extends Component {
   }
 
   changeDay(e, value = 'D') {
-    // const tdElements = document.getElementsByTagName('td');
-    // let activeClass = 'work-day';
+    const tdElements = document.getElementsByTagName('td');
     const { employees, activeDay, activeEmployee } = this.state;
     const employeeIndex = this.selectEmployee(employees, activeEmployee);
     const employee = employees.splice(employeeIndex, 1)[0];
+    let activeClass = 'work-day';
 
     employee.currentDaysInMonth[activeDay] = value;
     employees.splice(employeeIndex, 0, employee);
     this.setState({ employees: employees });
 
-    // switch (value) {
-    //   case 'U':
-    //     activeClass = 'vacation-day';
-    //     break;
-    //   case 'D':
-    //     activeClass = 'work-day';
-    //     break;
-    //   default:
-    //     activeClass = 'normal-day';
-    // }
-    // for (let td of tdElements) {
-    //   td.classList.remove(activeClass);
-    // }
-    // e.target.classList.add(activeClass);
+    switch (value) {
+      case 'U':
+        activeClass = 'vacation-day';
+        break;
+      case 'D':
+        activeClass = 'work-day';
+        break;
+      default:
+        activeClass = 'normal-day';
+    }
+
+    for (let td of tdElements) {
+      if (td.classList.contains('active-day')) {
+        td.classList.add(activeClass);
+      }
+    }
   }
 
   selectDay(e) {
@@ -173,6 +175,7 @@ class App extends Component {
 
     this.setState({
       activeEmployee: activeEmployee,
+      // activeDay returns the array index
       activeDay: activeDay
     });
   }
