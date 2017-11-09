@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TableRow = ({ employee, selectDay, employeeNumber }) => {
+const TableRow = ({
+  employee,
+  selectDay,
+  employeeNumber,
+  currentYear,
+  currentMonth
+}) => {
   return (
     <tr key={employee.id}>
       <td>{employeeNumber}</td>
@@ -20,9 +26,10 @@ const TableRow = ({ employee, selectDay, employeeNumber }) => {
           </td>
         );
       })}
-      <td>{employee.hours.should}</td>
-      <td>{employee.hours.worked}</td>
-      <td>{employee.hours.status}</td>
+
+      <td>{employee.hours[currentYear][currentMonth]['should']}</td>
+      <td>{employee.hours[currentYear][currentMonth]['worked']}</td>
+      <td>{employee.hours[currentYear][currentMonth]['monthlyStatus']}</td>
     </tr>
   );
 };

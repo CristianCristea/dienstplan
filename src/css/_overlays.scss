@@ -1,7 +1,19 @@
-.active-day {
-  background-color: tomato;
+.active-day,
+.work-day,
+.weekend-day,
+.vacation-day {
+  color: #fff;
+}
+
+.active-day,
+.work-day {
+  background-color: $dark-slate-blue;
 }
 
 .weekend-day {
   background-color: $mantis;
+}
+
+.vacation-day {
+  background-color: $hansa-yellow;
 }
