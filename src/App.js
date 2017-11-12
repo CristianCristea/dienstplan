@@ -28,42 +28,42 @@ class App extends Component {
                 should: 130.5,
                 worked: 0,
                 monthlyStatus: 0,
-                workHoursPerMonth: 174
+                workHoursPerMonth: 174,
+                days: [
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X',
+                  'X'
+                ]
               }
             }
-          },
-          currentDaysInMonth: [
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X',
-            'X'
-          ]
+          }
         }
       ],
       employeesArchive: []
@@ -76,6 +76,7 @@ class App extends Component {
     this.archiveEmployee = this.archiveEmployee.bind(this);
     this.updateWorkingHours = this.updateWorkingHours.bind(this);
     this.generateEmployeeWorkDays = this.generateEmployeeWorkDays.bind(this);
+    this.generateRoster = this.generateRoster.bind(this);
   }
 
   closeModal() {
@@ -135,32 +136,19 @@ class App extends Component {
   }
 
   changeDay(e, value = 'D') {
-    const tdElements = document.getElementsByTagName('td');
-    const { employees, activeDay, activeEmployee } = this.state;
+    const {
+      employees,
+      activeDay,
+      activeEmployee,
+      currentYear,
+      currentMonth
+    } = this.state;
     const employeeIndex = this.selectEmployee(employees, activeEmployee);
     const employee = employees.splice(employeeIndex, 1)[0];
-    let activeClass = 'work-day';
 
-    employee.currentDaysInMonth[activeDay] = value;
+    employee.hours[currentYear][currentMonth]['days'][activeDay] = value;
     employees.splice(employeeIndex, 0, employee);
     this.setState({ employees: employees });
-
-    switch (value) {
-      case 'U':
-        activeClass = 'vacation-day';
-        break;
-      case 'D':
-        activeClass = 'work-day';
-        break;
-      default:
-        activeClass = 'normal-day';
-    }
-
-    for (let td of tdElements) {
-      if (td.classList.contains('active-day')) {
-        td.classList.add(activeClass);
-      }
-    }
   }
 
   selectDay(e) {
@@ -188,8 +176,9 @@ class App extends Component {
     const { employees, activeEmployee, currentMonth, currentYear } = this.state;
     const employeeIndex = this.selectEmployee(employees, activeEmployee);
     const employee = employees.splice(employeeIndex, 1)[0];
-    const workedDays = employee.currentDaysInMonth.filter(day => day === 'D')
-      .length;
+    const workedDays = employee.hours[currentYear][currentMonth]['days'].filter(
+      day => day === 'D'
+    ).length;
     let workedHours = employee.hours.defaultWorkDay * workedDays;
     let shouldWorkHours = employee.hours[currentYear][currentMonth]['should'];
     let monthlyStatus =
@@ -208,6 +197,7 @@ class App extends Component {
     // TODO: calculate work hours for every month
     e.preventDefault();
     const { employees, currentYear, currentMonth } = this.state;
+
     person.hours.defaultWorkDay = 23;
     person.hours.totalStatus = 0;
     person.hours[currentYear][currentMonth]['worked'] = 0;
@@ -216,10 +206,10 @@ class App extends Component {
     person.hours[currentYear][currentMonth][
       'should'
     ] = this.setWorkinkHoursMonth(person.workTimePercent);
-    person['currentDaysInMonth'] = this.generateEmployeeWorkDays(
+    person['days'] = this.generateEmployeeWorkDays(
       this.daysInMonth(currentYear, currentMonth)
     );
-    console.log(person);
+
     employees.push(person);
     this.setState({ employees: employees });
     this.closeModal();
@@ -238,9 +228,24 @@ class App extends Component {
     });
   }
 
-  generateNextMonth() {
-    // loop through all employees and add a year and month
-    // change currentMonth to the generated one
+  generateRoster() {
+    // check if the year exists
+    // check if next month exists
+    // loop through all employees and add a year? and month
+    // change currentYear and currentMonth to the generated one
+    const { currentYear, currentMonth, employees } = this.state;
+
+    employees.map(employee => {
+      if (employee[currentYear]) {
+        console.log(currentYear);
+      } else {
+        console.log(currentYear + 1);
+      }
+    });
+  }
+
+  selectMonth(year, month) {
+    // change the currentYear and currentMonth
   }
 
   render() {
@@ -253,6 +258,7 @@ class App extends Component {
           changeDay={this.changeDay}
           archiveEmployee={this.archiveEmployee}
           updateWorkingHours={this.updateWorkingHours}
+          generateRoster={this.generateRoster}
         />
         {/* <SucessMessage name="Mitarbeiter hinzugefügt" />  */}
         <AddEmployee

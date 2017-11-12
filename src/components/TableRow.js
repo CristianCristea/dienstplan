@@ -14,15 +14,16 @@ const TableRow = ({
       <td>
         {employee.firstName} {employee.lastName}
       </td>
-      {employee.currentDaysInMonth.map((day, i) => {
+      {employee.hours[currentYear][currentMonth]['days'].map((day, i) => {
         return (
           <td
+            className={day === 'D' ? 'work-day' : 'normal-day'}
             name={employee.id}
             id={i}
             key={employee.id + i}
             onClick={e => selectDay(e)}
           >
-            {employee.currentDaysInMonth[i]}
+            {employee.hours[currentYear][currentMonth]['days'][i]}
           </td>
         );
       })}
