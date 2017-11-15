@@ -30,6 +30,8 @@ class Roster extends React.Component {
         </thead>
         <tbody>
           {employees.map(employee => {
+            console.log(employee);
+
             return (
               <TableRow
                 key={employee.id}

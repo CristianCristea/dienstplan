@@ -207,7 +207,9 @@ class App extends Component {
     person.hours[currentYear][currentMonth][
       'should'
     ] = this.setWorkinkHoursMonth(person.workTimePercent);
-    person['days'] = this.generateEmployeeWorkDays(
+    person.hours[currentYear][currentMonth][
+      'days'
+    ] = this.generateEmployeeWorkDays(
       this.daysInMonth(currentYear, currentMonth)
     );
 
