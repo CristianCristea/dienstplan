@@ -157,15 +157,9 @@ class App extends Component {
     return percent / 100 * defaultMonth;
   }
 
+  // calculate and update the worked hours and status +-
   updateWorkingHours() {
-    // get employee
-    // loop through days, filter D-days return the length
-    // subtract from should hours
-    // add to worked
-    // if worked > should add to overtime
-
     const { employees, activeEmployee } = this.state;
-
     const employeeIndex = this.selectEmployee(employees, activeEmployee);
     const employee = employees.splice(employeeIndex, 1)[0];
     const workedDays = employee.currentDaysInMonth.filter(day => day === 'D')
