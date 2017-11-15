@@ -198,18 +198,17 @@ class App extends Component {
     // TODO: calculate work hours for every month
     e.preventDefault();
     const { employees, currentYear, currentMonth } = this.state;
+    const currentEmployeeMonth = person.hours[currentYear][currentMonth];
 
     person.hours.defaultWorkDay = 23;
     person.hours.totalStatus = 0;
-    person.hours[currentYear][currentMonth]['worked'] = 0;
-    person.hours[currentYear][currentMonth]['monthlyStatus'] = 0;
-    person.hours[currentYear][currentMonth]['workHoursPerMonth'] = 174;
-    person.hours[currentYear][currentMonth][
-      'should'
-    ] = this.setWorkinkHoursMonth(person.workTimePercent);
-    person.hours[currentYear][currentMonth][
-      'days'
-    ] = this.generateEmployeeWorkDays(
+    currentEmployeeMonth['worked'] = 0;
+    currentEmployeeMonth['monthlyStatus'] = 0;
+    currentEmployeeMonth['workHoursPerMonth'] = 174;
+    currentEmployeeMonth['should'] = this.setWorkinkHoursMonth(
+      person.workTimePercent
+    );
+    currentEmployeeMonth['days'] = this.generateEmployeeWorkDays(
       this.daysInMonth(currentYear, currentMonth)
     );
 
@@ -252,8 +251,9 @@ class App extends Component {
   }
 
   render() {
-    const { currentMonth, currentYear } = this.state;
+    const { currentMonth, currentYear, showModal, employees } = this.state;
     let daysInMonth = this.daysInMonth(currentYear, currentMonth);
+
     return (
       <div className="App">
         <NavigationMenu
@@ -265,21 +265,21 @@ class App extends Component {
         />
         {/* <SucessMessage name="Mitarbeiter hinzugefügt" />  */}
         <AddEmployee
-          showModal={this.state.showModal}
+          showModal={showModal}
           closeModal={() => this.closeModal()}
           openModal={() => this.openModal()}
           registerEmployee={this.registerEmployee}
           daysInMonth={daysInMonth}
-          currentYear={this.state.currentYear}
-          currentMonth={this.state.currentMonth}
+          currentYear={currentYear}
+          currentMonth={currentMonth}
           generateEmployeeWorkDays={this.generateEmployeeWorkDays}
         />
         <Roster
           selectDay={this.selectDay}
-          employees={this.state.employees}
+          employees={employees}
           daysInMonth={daysInMonth}
-          currentYear={this.state.currentYear}
-          currentMonth={this.state.currentMonth}
+          currentYear={currentYear}
+          currentMonth={currentMonth}
         />
       </div>
     );
