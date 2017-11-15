@@ -58,12 +58,17 @@ class AddEmployee extends Component {
   }
 
   resetForm(e) {
+    const { currentYear, currentMonth } = this.props;
     this.setState({
       firstName: '',
       lastName: '',
       id: '',
-      workTimePercent: 0,
-      hours: {}
+      workTimePercent: '',
+      hours: {
+        [currentYear]: {
+          [currentMonth]: {}
+        }
+      }
     });
   }
 
