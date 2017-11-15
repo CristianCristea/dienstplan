@@ -5,7 +5,8 @@ const NavigationMenu = ({
   openModal,
   changeDay,
   archiveEmployee,
-  updateWorkingHours
+  updateWorkingHours,
+  generateRoster
 }) => {
   return (
     <Navbar>
@@ -18,6 +19,9 @@ const NavigationMenu = ({
         </NavItem>
         <NavItem eventKey={2} href="#" onClick={archiveEmployee}>
           Remove Employee
+        </NavItem>
+        <NavItem eventKey={3} href="#" onClick={generateRoster}>
+          New Dienstplan
         </NavItem>
         <NavItem
           eventKey={4}

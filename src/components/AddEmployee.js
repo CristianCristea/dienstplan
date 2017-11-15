@@ -10,25 +10,23 @@ import {
   Col
 } from 'react-bootstrap';
 
-// TODO: reset form after submit
+// TODO calculate  initial workingHoursPerMonth then update on generate month
 
 class AddEmployee extends Component {
   constructor(props) {
     super(props);
+    const { currentYear, currentMonth } = this.props;
 
     this.state = {
       firstName: '',
       lastName: '',
       id: '',
+      workTimePercent: '',
       hours: {
-        should: null,
-        worked: null,
-        overtime: null,
-        defaultDay: 23,
-        defaultMonth: 176,
-        percentFromDefaultMonth: 100
-      },
-      currentDaysInMonth: []
+        [currentYear]: {
+          [currentMonth]: {}
+        }
+      }
     };
   }
 
@@ -48,30 +46,15 @@ class AddEmployee extends Component {
     const name = e.target.name;
     const value = e.target.value;
     const id = this.generateId();
-    const generateEmployeeWorkDays = this.generateEmployeeWorkDays(
-      this.props.daysInMonth
-    );
 
     this.setState({
       [name]: value,
-      id: id,
-      currentDaysInMonth: generateEmployeeWorkDays
+      id: id
     });
   }
 
   handleFormInputHours(e) {
-    const employeeHours = this.state.hours;
-    employeeHours['percentFromDefaultMonth'] = e.target.value;
-    this.setState({ hours: employeeHours });
-  }
-
-  generateEmployeeWorkDays(days, workDay = 'X') {
-    const row = [];
-    for (let i = 1; i <= days; i++) {
-      row.push(workDay);
-    }
-
-    return row;
+    this.setState({ workTimePercent: e.target.value });
   }
 
   resetForm(e) {
@@ -79,15 +62,8 @@ class AddEmployee extends Component {
       firstName: '',
       lastName: '',
       id: '',
-      hours: {
-        should: null,
-        worked: 0,
-        overtime: null,
-        defaultDay: 23,
-        defaultMonth: 176,
-        percentFromDefaultMonth: 100
-      },
-      currentDaysInMonth: []
+      workTimePercent: 0,
+      hours: {}
     });
   }
 
@@ -139,9 +115,9 @@ class AddEmployee extends Component {
               <Col sm={10}>
                 <FormControl
                   type="number"
-                  placeholder="Arbeitszeit - Stunden"
+                  placeholder="Arbeitszeit - 100%"
                   name="percentFromDefaultMonth"
-                  value={this.state.hours.percentFromDefaultMonth}
+                  value={this.state.workTimePercent}
                   onChange={e => this.handleFormInputHours(e)}
                 />
               </Col>
@@ -175,7 +151,7 @@ AddEmployee.propTypes = {
   openModal: PropTypes.func,
   closeModal: PropTypes.func,
   daysInMonth: PropTypes.number,
-  currentMonth: PropTypes.string,
+  currentMonth: PropTypes.number,
   registerEmployee: PropTypes.func
 };
 
