@@ -17,7 +17,6 @@ const TableRow = ({
         {employee.firstName} {employee.lastName}
       </td>
       {employee.hours[currentYear][currentMonth]['days'].map((day, i) => {
-        console.log(isWeekend(i + 1));
         return (
           <td
             className={`${
