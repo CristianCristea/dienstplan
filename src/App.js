@@ -76,7 +76,7 @@ class App extends Component {
     this.archiveEmployee = this.archiveEmployee.bind(this);
     this.updateWorkingHours = this.updateWorkingHours.bind(this);
     this.generateEmployeeWorkDays = this.generateEmployeeWorkDays.bind(this);
-    this.generateRoster = this.generateRoster.bind(this);
+    // this.generateRoster = this.generateRoster.bind(this);
   }
 
   closeModal() {
@@ -230,21 +230,21 @@ class App extends Component {
     });
   }
 
-  generateRoster() {
-    // check if the year exists
-    // check if next month exists
-    // loop through all employees and add a year? and month
-    // change currentYear and currentMonth to the generated one
-    const { currentYear, currentMonth, employees } = this.state;
-
-    employees.map(employee => {
-      if (employee[currentYear]) {
-        console.log(currentYear);
-      } else {
-        console.log(currentYear + 1);
-      }
-    });
-  }
+  // generateRoster() {
+  // check if the year exists
+  // check if next month exists
+  // loop through all employees and add a year? and month
+  // change currentYear and currentMonth to the generated one
+  //   const { currentYear, currentMonth, employees } = this.state;
+  //
+  //   employees.map(employee => {
+  //     if (employee[currentYear]) {
+  //       console.log(currentYear);
+  //     } else {
+  //       console.log(currentYear + 1);
+  //     }
+  //   });
+  // }
 
   selectMonth(year, month) {
     // change the currentYear and currentMonth
