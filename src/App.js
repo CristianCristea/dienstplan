@@ -103,7 +103,7 @@ class App extends Component {
     return row;
   }
 
-  nameCurrentMonth(monthNumber) {
+  nameMonth(monthNumber) {
     const months = [
       'Januar',
       'Februar',
@@ -258,6 +258,7 @@ class App extends Component {
   render() {
     const { currentMonth, currentYear, showModal, employees } = this.state;
     let daysInMonth = this.daysInMonth(currentYear, currentMonth);
+    let monthName = this.nameMonth(currentMonth);
 
     return (
       <div className="App">
@@ -280,6 +281,7 @@ class App extends Component {
           generateEmployeeWorkDays={this.generateEmployeeWorkDays}
         />
         <Roster
+          monthName={monthName}
           selectDay={this.selectDay}
           employees={employees}
           daysInMonth={daysInMonth}

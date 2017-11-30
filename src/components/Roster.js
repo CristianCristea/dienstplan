@@ -50,46 +50,55 @@ class Roster extends Component {
   }
 
   render() {
-    const { employees, daysInMonth, currentYear, currentMonth } = this.props;
+    const {
+      employees,
+      daysInMonth,
+      currentYear,
+      currentMonth,
+      monthName
+    } = this.props;
 
     return (
-      <Table striped bordered condensed hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            {this.generateDays(daysInMonth).map((row, i) => {
+      <div>
+        <h1>{monthName}</h1>
+        <Table striped bordered condensed hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              {this.generateDays(daysInMonth).map((row, i) => {
+                return (
+                  <th
+                    key={row}
+                    className={this.isWeekend(i + 1) ? 'weekend-day' : null}
+                  >
+                    {row}
+                  </th>
+                );
+              })}
+              <th>Soll</th>
+              <th>Ist</th>
+              <th>Std</th>
+            </tr>
+          </thead>
+          <tbody>
+            {employees.map(employee => {
               return (
-                <th
-                  key={row}
-                  className={this.isWeekend(i + 1) ? 'weekend-day' : null}
-                >
-                  {row}
-                </th>
+                <TableRow
+                  key={employee.id}
+                  employee={employee}
+                  employeeNumber={employees.indexOf(employee)}
+                  selectDay={this.props.selectDay}
+                  currentYear={currentYear}
+                  currentMonth={currentMonth}
+                  generateWeekendDays={this.generateWeekendDays}
+                  isWeekend={this.isWeekend}
+                />
               );
             })}
-            <th>Soll</th>
-            <th>Ist</th>
-            <th>Std</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map(employee => {
-            return (
-              <TableRow
-                key={employee.id}
-                employee={employee}
-                employeeNumber={employees.indexOf(employee)}
-                selectDay={this.props.selectDay}
-                currentYear={currentYear}
-                currentMonth={currentMonth}
-                generateWeekendDays={this.generateWeekendDays}
-                isWeekend={this.isWeekend}
-              />
-            );
-          })}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </div>
     );
   }
 }
