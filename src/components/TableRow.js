@@ -6,7 +6,9 @@ const TableRow = ({
   selectDay,
   employeeNumber,
   currentYear,
-  currentMonth
+  currentMonth,
+  generateWeekendDays,
+  isWeekend
 }) => {
   return (
     <tr key={employee.id}>
@@ -15,9 +17,14 @@ const TableRow = ({
         {employee.firstName} {employee.lastName}
       </td>
       {employee.hours[currentYear][currentMonth]['days'].map((day, i) => {
+        console.log(isWeekend(i + 1));
         return (
           <td
-            className={day === 'D' ? 'work-day' : 'normal-day'}
+            className={`${
+              day === 'D'
+                ? 'work-day'
+                : isWeekend(i + 1) ? 'weekend-day' : 'normal-day'
+            }`}
             name={employee.id}
             id={i}
             key={employee.id + i}
