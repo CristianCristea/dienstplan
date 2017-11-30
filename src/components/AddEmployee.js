@@ -5,7 +5,6 @@ import {
   Button,
   Form,
   FormGroup,
-  FormControl,
   ControlLabel,
   Col
 } from 'react-bootstrap';
@@ -21,7 +20,7 @@ class AddEmployee extends Component {
       firstName: '',
       lastName: '',
       id: '',
-      workTimePercent: '',
+      workTimePercent: 100,
       hours: {
         [currentYear]: {
           [currentMonth]: {}
@@ -63,7 +62,7 @@ class AddEmployee extends Component {
       firstName: '',
       lastName: '',
       id: '',
-      workTimePercent: '',
+      workTimePercent: 100,
       hours: {
         [currentYear]: {
           [currentMonth]: {}
@@ -82,15 +81,19 @@ class AddEmployee extends Component {
           <Modal.Title>Mitarbeiter hinzufügen</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form horizontal>
+          <Form horizontal id="AddEmployeeForm">
             <FormGroup controlId="firstName">
               <Col componentClass={ControlLabel} sm={2}>
                 Vorname
               </Col>
               <Col sm={10}>
-                <FormControl
+                <input
+                  className="form-control"
                   type="text"
                   placeholder="Vorname"
+                  required
+                  pattern="^[a-zA-Z]*$"
+                  minLength="3"
                   name="firstName"
                   value={this.state.firstName}
                   onChange={e => this.handleFormInput(e)}
@@ -103,9 +106,13 @@ class AddEmployee extends Component {
                 Nachname
               </Col>
               <Col sm={10}>
-                <FormControl
+                <input
+                  className="form-control"
                   type="text"
                   placeholder="Nachname"
+                  required
+                  pattern="^[a-zA-Z]*$"
+                  minLength="3"
                   name="lastName"
                   value={this.state.lastName}
                   onChange={e => this.handleFormInput(e)}
@@ -118,9 +125,13 @@ class AddEmployee extends Component {
                 Arbeitszeit
               </Col>
               <Col sm={10}>
-                <FormControl
+                <input
+                  className="form-control"
                   type="number"
                   placeholder="Arbeitszeit - 100%"
+                  pattern="[^\d+$]"
+                  min="10"
+                  max="100"
                   name="percentFromDefaultMonth"
                   value={this.state.workTimePercent}
                   onChange={e => this.handleFormInputHours(e)}

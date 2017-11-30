@@ -22,3 +22,10 @@
 .vacation-day {
   background-color: $hansa-yellow;
 }
+
+// invalid input
+input {
+  &:invalid {
+    border: 1px dashed $rusty-red;
+  }
+}

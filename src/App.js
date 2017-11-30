@@ -199,22 +199,27 @@ class App extends Component {
     e.preventDefault();
     const { employees, currentYear, currentMonth } = this.state;
     const currentEmployeeMonth = person.hours[currentYear][currentMonth];
+    const formElem = document.getElementById('AddEmployeeForm');
 
-    person.hours.defaultWorkDay = 23;
-    person.hours.totalStatus = 0;
-    currentEmployeeMonth['worked'] = 0;
-    currentEmployeeMonth['monthlyStatus'] = 0;
-    currentEmployeeMonth['workHoursPerMonth'] = 174;
-    currentEmployeeMonth['should'] = this.setWorkinkHoursMonth(
-      person.workTimePercent
-    );
-    currentEmployeeMonth['days'] = this.generateEmployeeWorkDays(
-      this.daysInMonth(currentYear, currentMonth)
-    );
+    if (formElem.checkValidity()) {
+      person.hours.defaultWorkDay = 23;
+      person.hours.totalStatus = 0;
+      currentEmployeeMonth['worked'] = 0;
+      currentEmployeeMonth['monthlyStatus'] = 0;
+      currentEmployeeMonth['workHoursPerMonth'] = 174;
+      currentEmployeeMonth['should'] = this.setWorkinkHoursMonth(
+        person.workTimePercent
+      );
+      currentEmployeeMonth['days'] = this.generateEmployeeWorkDays(
+        this.daysInMonth(currentYear, currentMonth)
+      );
 
-    employees.push(person);
-    this.setState({ employees: employees });
-    this.closeModal();
+      employees.push(person);
+      this.setState({ employees: employees });
+      this.closeModal();
+    } else {
+      console.log('invalid input');
+    }
   }
 
   archiveEmployee() {
