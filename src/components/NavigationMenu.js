@@ -27,14 +27,24 @@ const NavigationMenu = ({
           eventKey={4}
           href="#"
           onClick={e => {
-            changeDay(e, 'D');
+            changeDay(e, 'F');
             updateWorkingHours();
           }}
         >
-          D
+          F
         </NavItem>
         <NavItem
           eventKey={5}
+          href="#"
+          onClick={e => {
+            changeDay(e, 'S');
+            updateWorkingHours();
+          }}
+        >
+          S
+        </NavItem>
+        <NavItem
+          eventKey={6}
           href="#"
           onClick={e => {
             changeDay(e, 'X');

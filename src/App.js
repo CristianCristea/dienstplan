@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import NavigationMenu from './components/NavigationMenu';
 import AddEmployee from './components/AddEmployee';
 import Roster from './components/Roster';
@@ -21,15 +22,16 @@ class App extends Component {
           id: '_dii6bxxe3',
           workTimePercent: 75,
           hours: {
-            defaultWorkDay: 23,
+            workHoursPerDay: 8,
             totalStatus: 0,
             2017: {
-              10: {
+              11: {
                 should: 130.5,
                 worked: 0,
                 monthlyStatus: 0,
                 workHoursPerMonth: 174,
                 days: [
+                  'X',
                   'X',
                   'X',
                   'X',
@@ -172,15 +174,15 @@ class App extends Component {
     return percent / 100 * defaultMonth;
   }
 
-  // calculate and update the worked hours and status +-
+  // calculate and update the worked hours and status
   updateWorkingHours() {
     const { employees, activeEmployee, currentMonth, currentYear } = this.state;
     const employeeIndex = this.selectEmployee(employees, activeEmployee);
     const employee = employees.splice(employeeIndex, 1)[0];
     const workedDays = employee.hours[currentYear][currentMonth]['days'].filter(
-      day => day === 'D'
+      day => day === 'F' || day === 'S'
     ).length;
-    let workedHours = employee.hours.defaultWorkDay * workedDays;
+    let workedHours = employee.hours.workHoursPerDay * workedDays;
     let shouldWorkHours = employee.hours[currentYear][currentMonth]['should'];
     let monthlyStatus =
       workedHours > shouldWorkHours
@@ -202,7 +204,7 @@ class App extends Component {
     const formElem = document.getElementById('AddEmployeeForm');
 
     if (formElem.checkValidity()) {
-      person.hours.defaultWorkDay = 23;
+      person.hours.workHoursPerDay = 8;
       person.hours.totalStatus = 0;
       currentEmployeeMonth['worked'] = 0;
       currentEmployeeMonth['monthlyStatus'] = 0;
@@ -253,6 +255,25 @@ class App extends Component {
 
   selectMonth(year, month) {
     // change the currentYear and currentMonth
+  }
+
+  holidaysInYear(year) {
+    axios
+      .get(
+        'https://cors-anywhere.herokuapp.com/http://feiertage.jarmedia.de/api/',
+        {
+          params: {
+            jahr: 2017,
+            nur_land: 'BY'
+          }
+        }
+      )
+      .then(resp => console.log(resp.data))
+      .catch(err => console.log(err));
+  }
+
+  componentDidMount() {
+    this.holidaysInYear(2017);
   }
 
   render() {

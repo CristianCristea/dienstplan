@@ -20,7 +20,7 @@ const TableRow = ({
         return (
           <td
             className={`${
-              day === 'D'
+              day === 'F' || day === 'S'
                 ? 'work-day'
                 : isWeekend(i + 1) ? 'weekend-day' : 'normal-day'
             }`}
